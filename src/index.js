@@ -71,6 +71,21 @@ function _SpecResult (result)
 {
 	if (!result) result   = { _: [] }
 	result[SymKey_Result] = true
+
+	let desc = Object.getOwnPropertyDescriptor(result, SymKey_Result)
+	if (!desc) {
+		Object.defineProperty(result, SymKey_Result, {
+			value:      true,
+			enumerable: false,
+		})
+	}
+	else if (desc.enumerable) {
+		desc.enumerable = false
+		Object.defineProperty(result, SymKey_Result, desc)
+	}
+	else {
+	}
+
 	return result
 }
 

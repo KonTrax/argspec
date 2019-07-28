@@ -18,9 +18,23 @@ const FIX = {
 	result: {
 		default:  () => FIX.result.minKind(),
 		minPlain: () => ({ _: [] }),
-		minKind:  () => ({ _: [], [Spec.SymKey_Result]: true }),
+		minKind:  () => ({ _: [] }),
+		// minKind:  () => ({ _: [], [Spec.SymKey_Result]: true }),
 	},
 }
+
+const hasKind =
+	(sym :symbol) =>
+	(obj :object) => (!!obj && typeof obj === 'object'
+		&& (true === (typeof (obj as any)[sym] === 'boolean'))
+		&& (true === ((obj as any)[sym]))
+		&& (true === (sym in obj))
+		&& (
+			(Object.getOwnPropertyDescriptor(obj, sym) || {})
+				.enumerable === false
+		)
+)
+
 
 //==============================================================================
 describe('Factory', () => {
@@ -343,8 +357,11 @@ describe('Spec.parse', () => {
 		const a    = { '--var1': Boolean }
 		const test = (argv ?:string[]) => Spec(a).parse({ argv })
 
+		// const symKeyTest = hasKind(Spec.SymKey_Result)
+		// expect(symKeyTest(test([ '--var1' ]))).toBe(true)
+
 		expect(test([ '--var1' ])).toEqual({
-			[Spec.SymKey_Result]: expect.any(Boolean),
+			// [Spec.SymKey_Result]: expect.any(Boolean),
 			_: [],
 			'--var1': true,
 		})
@@ -355,13 +372,16 @@ describe('Spec.parse', () => {
 		const b    = { '--var2': Boolean }
 		const test = (argv ?:string[]) => Spec(a)(b).parse({ argv })
 
+		// const symKeyTest = hasKind(Spec.SymKey_Result)
+		// expect(symKeyTest(test([ '--var1' ]))).toBe(true)
+
 		expect(test([ '--var1' ])).toEqual({
-			[Spec.SymKey_Result]: expect.any(Boolean),
+			// [Spec.SymKey_Result]: expect.any(Boolean),
 			_: [],
 			'--var1': true,
 		})
 		expect(test([ '--var1', '--var2' ])).toEqual({
-			[Spec.SymKey_Result]: expect.any(Boolean),
+			// [Spec.SymKey_Result]: expect.any(Boolean),
 			_: [],
 			'--var1': true,
 			'--var2': true,
@@ -375,8 +395,11 @@ describe('Spec.parse', () => {
 		}
 		const test = (argv ?:string[]) => Spec(a).parse({ argv })
 
+		// const symKeyTest = hasKind(Spec.SymKey_Result)
+		// expect(symKeyTest(test([ '--var1' ]))).toBe(true)
+
 		expect(test([ '--var1', 'value1', '--var2' ])).toEqual({
-			[Spec.SymKey_Result]: expect.any(Boolean),
+			// [Spec.SymKey_Result]: expect.any(Boolean),
 			_: ['value1'],
 			'--var1': true,
 			'--var2': true,
@@ -403,12 +426,29 @@ describe('Members', () => {
 	{
 		const test = makeTest()
 
+		// const symKeyTest = hasKind(Spec.SymKey_Result)
+		// expect(symKeyTest(test())).toBe(true)
+
 		expect(test()).toEqual(expect.any(Object))
 		expect(test()).toEqual({
-			[Spec.SymKey_Result]: expect.any(Boolean),
+			// [Spec.SymKey_Result]: expect.any(Boolean),
 			_: expect.any(Array),
 		})
 		expect(Object.keys(test())).toEqual(['_'])
+	})
+
+	it('hides symbol internal key from enumeration', () => {
+		const a    = { '--var1': Boolean }
+		const test = (argv ?:string[]) => Spec(a).parse({ argv })
+
+		const symKeyTest = hasKind(Spec.SymKey_Result)
+		expect(symKeyTest(test([ '--var1' ]))).toBe(true)
+
+		expect(test([ '--var1' ])).toEqual({
+			// [Spec.SymKey_Result]: expect.any(Boolean),
+			_: [],
+			'--var1': true,
+		})
 	})
 
 	it('works correctly with loops', () =>
