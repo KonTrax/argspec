@@ -1,0 +1,36 @@
+{
+  "name": "@ktb/argspec",
+  "version": "0.1.0",
+  "description": "cli",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KonTrax/argspec.git"
+  },
+  "author": "KonTrax",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KonTrax/argspec/issues"
+  },
+  "homepage": "https://github.com/KonTrax/argspec#readme",
+  "scripts": {
+    "lint": "tslint -p tsconfig.json",
+    "typecheck": "npm run typecheck:src && npm run typecheck:tests",
+    "typecheck:src": "tsc -P tsconfig.json --noEmit",
+    "typecheck:tests": "tsc -P tsconfig.test.json --noEmit",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.15",
+    "@types/node": "^12.6.8",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "@ktb/type-tools": "^1.0.0",
+    "arg": "^4.1.1"
+  }
+}

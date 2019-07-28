@@ -1,0 +1,27 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"target": "es6",
+		"lib": [ "es6", "dom" ],
+
+		// "outDir":  "dist",
+		"rootDir": "src",
+
+		// "declaration": true,
+
+		"noEmit":        true,
+		"noEmitOnError": true,
+
+		"newLine": "LF",
+
+		"strict": true,
+
+		"allowJs": true,
+		"checkJs": true,
+
+		// "types": [
+		// 	// "node",
+		// ],
+	},
+	"include": ["src"]
+}

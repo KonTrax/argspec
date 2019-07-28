@@ -1,0 +1,36 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"noEmit": true,
+		// "module": "commonjs",
+		// "target": "es6",
+		// "lib": [ "es6" ],
+
+		// "outDir":  "dist",
+		"rootDir": ".",
+
+		"baseUrl": ".",
+		"paths": {
+			"@src/*": ["src/*"],
+			"@src":   ["src"]
+		},
+
+		/* Strict Type-Checking Option */
+		// "strict": true,
+
+		/* Additional Checks */
+		"noUnusedLocals": false,
+
+		// "types": [
+		// 	// "node",
+		// ]
+	},
+	"include": [
+		"__tests__/**/*",
+		"src/**/*"
+	],
+	"exclude": [
+		"__fixtures__",
+		"**/_local"
+	]
+}
